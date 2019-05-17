@@ -91,58 +91,35 @@ _BaseWidget_ extends [React.Component](https://reactjs.org/docs/components-and-p
 
 ## 2. The Resource Classes
 
-## Widget Resource
+## [Widget Resource](WidgetResource.md)
 ```bash
 src/common/resources/WidgetResource
 ```
 
-```js
-class WidgetResource {
-  constructor(url) {
-    this._resourceUrl = `analytics/${url}`;
-    this._apiService = getInstance('api');
-  }
-
-  get propKeys() {
-    return [];
-  }
-
-  get stateKeys() {
-    return [];
-  }
-
-  fetchData(widgetName, props, state) {
-    return this._apiService.getItems(this._resourceUrl, this._formParamsFromPropsAndState(props,state))
-      .then(response => response.data)
-      .catch(err => {
-        logger('error', `failed to fetch data for widget: ${widgetName}`, err);
-        throw err;
-      });
-  }
-
-  _formParamsFromPropsAndState(props, state) {
-    return Object.assign({}, pick(props, this.propKeys), pick(state, this.stateKeys));
-  }
-}
-```
-
 _WidgetResource_ is responsible for fetching data from the url provided to the constructor.
 
-## Transaction Resource
+## [Transaction Resource](TransactionResource.md)
 ```bash
 src/views/analytics/transaction/resources/TransactionResource
 ```
 
-```js
-class TransactionResource extends WidgetResource {
-  get propKeys() {
-    return ['startDate', 'endDate'];
-  }
+_TransactionResource_ extends _WidgetResource_ to override get methods ```propKeys``` and ```stateKeys```. This means it takes responsibility of passing values that form the params for the api calls.
 
-  get stateKeys() {
-    return ['groupBy'];
-  }
-}
+## 3. The Analytics View
+```bash
+src/views/analytics/index.js
 ```
 
-_TransactionResource_ extends _WidgetResource_ to override get methods ```propKeys``` and ```stateKeys```. This means it takes responsibility of passing values that form the params for the api calls.
+```js
+this.transactionStatResource = new transactionResources.TransactionResource(
+  'transactions/stat/all'
+);
+
+<transactionWidgets.TransactionTotalSuccess
+            startDate={'2018-09-03'}
+            name={'transaction-total-success'}
+            title={'Total Successful Transactions'}
+            resources={[this.transactionStatResource]}/>
+```
+
+This is where the first two parts come together to form a working analytics widget.
