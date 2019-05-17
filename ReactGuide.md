@@ -1,5 +1,13 @@
 # Biz Dashboard Guide: "Creating Analytics Widgets"
 
+The widgets that display analytics on Biz Dashboard app, are complex react components that are composed of or inherit from other components. This is done to separate fetching data, processing data and then rendering the result. So a widget in Biz Dashboard is made up of **React Components** and **Resource Classes**.
+
+## Prerequisites
+Read these before to understand this guide better.
+1. [React Concepts](https://reactjs.org/docs/hello-world.html)
+2. [Component Lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram)
+2. [Biz Dashboard Development Guideline](https://bitbucket.org/DigitalPlumbing/apg-biz-dashboard/src/f2068d1aebfac044f5c13788d8a024a637227065/project-wiki/development.md)
+
 ## 1. The React Components
 
 ### Analytics Widget
@@ -59,7 +67,7 @@ class NumberWidget extends BaseWidget {
 _NumberWidget_ is one of the shared Base Widget
 _NumberWidget_ which is inherited by _TransactionSuccessPercentage_ has the sole responsibility of rendering the component. No other classes related to the Analytics Widget has a ```render``` method in them. The exceptions are _TopCustomer_ and _TopFailureReason_ analytics widgets, as they do not extend
 
-### BaseWidget
+### [BaseWidget](BaseWidget.md)
 >base class extended by Shared Widgets and sometimes Analytics Widget
 
 ```bash
@@ -120,7 +128,7 @@ class WidgetResource {
 
 _WidgetResource_ is responsible for fetching data from the url provided to the constructor.
 
-## TransactionResource
+## Transaction Resource
 ```bash
 src/views/analytics/transaction/resources/TransactionResource
 ```
