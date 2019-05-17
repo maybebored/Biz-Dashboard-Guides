@@ -35,7 +35,7 @@ class TransactionSuccessPercentage extends NumberWidget {
 
 _TransactionSuccessPercentage_ waits for data and processes it by overriding the super class method ```processFetchedData```. This method calls ```updateData```  where the processed data is set to the component's state.
 
-### Shared Widget Component
+### [Shared Widget Component](SharedWidget.md)
 >extended by Analytics Widget
 
 ```bash
